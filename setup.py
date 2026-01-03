@@ -41,9 +41,4 @@ setup(
             "flake8>=6.0.0",
         ],
     },
-    entry_points={
-        "console_scripts": [
-            "rag-server=src.rag_system.api:main",
-        ],
-    },
 )

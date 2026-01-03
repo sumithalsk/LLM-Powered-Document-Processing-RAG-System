@@ -5,6 +5,7 @@ import os
 import tempfile
 from typing import Optional
 from pathlib import Path
+from contextlib import asynccontextmanager
 
 from fastapi import FastAPI, File, UploadFile, HTTPException, Query
 from fastapi.middleware.cors import CORSMiddleware
@@ -49,11 +50,27 @@ class SystemStatsResponse(BaseModel):
     vector_store_path: str
 
 
-# Initialize FastAPI app
+# Global RAG system instance
+rag_system = None
+
+
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Lifespan context manager for startup and shutdown."""
+    global rag_system
+    # Startup: Initialize RAG system
+    rag_system = RAGSystem()
+    yield
+    # Shutdown: cleanup if needed
+    rag_system = None
+
+
+# Initialize FastAPI app with lifespan
 app = FastAPI(
     title="RAG System API",
     description="Production-ready Retrieval-Augmented Generation API for document Q&A",
-    version="0.1.0"
+    version="0.1.0",
+    lifespan=lifespan
 )
 
 # Add CORS middleware
@@ -64,16 +81,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Initialize RAG system
-rag_system = None
-
-
-@app.on_event("startup")
-async def startup_event():
-    """Initialize RAG system on startup."""
-    global rag_system
-    rag_system = RAGSystem()
 
 
 @app.get("/")

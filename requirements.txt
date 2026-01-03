@@ -12,12 +12,9 @@ pdfplumber==0.10.4
 # Vector embeddings and search
 sentence-transformers==2.3.1
 faiss-cpu==1.8.0
-chromadb==0.4.22
 
 # LLM integration
 openai==1.10.0
-langchain==0.1.4
-langchain-openai==0.0.5
 
 # Utilities
 python-dotenv==1.0.0

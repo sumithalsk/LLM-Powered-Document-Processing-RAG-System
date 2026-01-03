@@ -6,7 +6,6 @@ import tempfile
 from pathlib import Path
 
 import pytest
-from PyPDF2 import PdfWriter
 from reportlab.pdfgen import canvas
 from reportlab.lib.pagesizes import letter
 
