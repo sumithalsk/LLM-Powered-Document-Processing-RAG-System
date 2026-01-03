@@ -53,6 +53,40 @@ python main.py
 
 The API will be available at `http://localhost:8000`
 
+### Using the CLI Tool
+
+The system includes a CLI for quick document ingestion and querying:
+
+```bash
+# Ingest a document
+python cli.py ingest path/to/document.pdf
+
+# Query the system
+python cli.py query "What is machine learning?"
+
+# Show statistics
+python cli.py stats
+
+# Query with options
+python cli.py query "Explain the concept" --top-k 3 --show-sources --verbose
+```
+
+### Using the Python API
+
+```python
+from src.rag_system.rag import RAGSystem
+
+# Initialize
+rag = RAGSystem()
+
+# Ingest a document
+result = rag.ingest_document("document.pdf")
+
+# Query
+response = rag.query("What is the main topic?")
+print(response['answer'])
+```
+
 ### API Documentation
 
 Once the server is running, visit:
